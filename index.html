@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Charlotte's SATPIN Sound Station</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #ff5ca8;
+  --pink-dark: #d92578;
+  --pink-light: #ffd6ea;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --blue: #2563eb;
+  --blue-light: #dbeafe;
+  --green: #16a34a;
+  --green-light: #dcfce7;
+  --yellow: #facc15;
+  --yellow-light: #fef9c3;
+  --orange: #fb923c;
+  --orange-light: #ffedd5;
+  --red: #dc2626;
+  --text: #1f2937;
+  --muted: #667085;
+  --bg: #fff8fc;
+  --card: #ffffff;
+  --border: #ead7e8;
+  --shadow: 0 8px 24px rgba(31, 41, 55, 0.10);
+  --radius: 22px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(circle at top left, #ffe1f1 0, transparent 30%),
+    radial-gradient(circle at top right, #e7ddff 0, transparent 28%),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding-bottom: 70px;
+}
+
+button, input, textarea {
+  font-family: inherit;
+}
+
+.header {
+  background: linear-gradient(135deg, #ff5ca8 0%, #7c3aed 100%);
+  color: white;
+  text-align: center;
+  padding: 30px 16px 26px;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 5px solid #facc15;
+}
+
+.header::before,
+.header::after {
+  content: "⭐";
+  position: absolute;
+  font-size: 100px;
+  opacity: 0.12;
+}
+
+.header::before { left: 14px; top: -18px; }
+.header::after { right: 12px; bottom: -22px; }
+
+.adult-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: 2px solid rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.16);
+  color: white;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: 7px 12px;
+  cursor: pointer;
+  z-index: 4;
+}
+
+.header h1 {
+  font-family: "Baloo 2", cursive;
+  font-size: clamp(2.1rem, 7vw, 4rem);
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+  text-shadow: 2px 3px 0 rgba(0,0,0,0.14);
+}
+
+.header p {
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  font-weight: 800;
+  margin-top: 8px;
+}
+
+.tts-bar {
+  background: #ffffff;
+  border-bottom: 2px solid var(--border);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 10px rgba(31,41,55,0.04);
+}
+
+.tts-bar span {
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.speed-btn,
+.stop-btn {
+  border: 2px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.speed-btn.active {
+  background: var(--purple);
+  color: white;
+  border-color: var(--purple);
+}
+
+.stop-btn {
+  background: #fee2e2;
+  color: var(--red);
+  border-color: #fecaca;
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 22px 16px;
+}
+
+.welcome-card {
+  background: #ffffff;
+  border: 3px solid var(--pink-light);
+  border-radius: 28px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+  align-items: center;
+  box-shadow: var(--shadow);
+}
+
+.avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #fff4bd, #ffc0df);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.4rem;
+  border: 3px solid #fff;
+}
+
+.welcome-card h2 {
+  font-family: "Baloo 2", cursive;
+  color: var(--pink-dark);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.welcome-card p {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.read-big {
+  margin-top: 12px;
+  background: var(--pink);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 6px 0 var(--pink-dark);
+}
+
+.read-big:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 var(--pink-dark);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 34px 0 14px;
+}
+
+.section-emoji {
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  border: 2px solid var(--border);
+  box-shadow: 0 4px 12px rgba(31,41,55,0.07);
+}
+
+.section-header h2 {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.85rem;
+  color: var(--purple);
+  line-height: 1;
+}
+
+.section-line {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--purple), transparent);
+}
+
+.sound-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+}
+
+.sound-card {
+  background: white;
+  border: 3px solid var(--border);
+  border-radius: 24px;
+  padding: 12px 8px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.sound-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--pink);
+}
+
+.sound-letter {
+  font-family: "Baloo 2", cursive;
+  font-size: 3.8rem;
+  line-height: 0.95;
+  color: var(--pink-dark);
+}
+
+.sound-example {
+  font-size: 1.9rem;
+  margin-top: 6px;
+}
+
+.sound-word {
+  font-size: 0.9rem;
+  font-weight: 900;
+  color: var(--muted);
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
+  gap: 16px;
+}
+
+.activity-card {
+  background: var(--card);
+  border: 3px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.card-top {
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.card-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  flex-shrink: 0;
+}
+
+.bg-pink { background: var(--pink-light); }
+.bg-blue { background: var(--blue-light); }
+.bg-green { background: var(--green-light); }
+.bg-yellow { background: var(--yellow-light); }
+.bg-orange { background: var(--orange-light); }
+.bg-purple { background: var(--purple-light); }
+
+.card-tag {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: var(--purple-light);
+  color: var(--purple);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.card-title {
+  font-family: "Baloo 2", cursive;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+.card-desc {
+  padding: 0 16px 14px;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 2px solid #f3e8ff;
+  background: #fffcff;
+  flex-wrap: wrap;
+}
+
+.small-btn {
+  border: none;
+  border-radius: 999px;
+  padding: 9px 12px;
+  font-weight: 900;
+  cursor: pointer;
+  color: white;
+  background: var(--purple);
+}
+
+.small-btn.alt {
+  background: var(--pink);
+}
+
+.steps {
+  padding: 14px 16px 16px;
+  background: #fbf7ff;
+  border-top: 2px solid #f3e8ff;
+}
+
+.steps h4 {
+  font-family: "Baloo 2", cursive;
+  color: var(--pink-dark);
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.steps ol {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.steps li {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 9px;
+  align-items: start;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+.num {
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: var(--pink);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.game-box {
+  background: white;
+  border: 3px dashed #d8b4fe;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.game-title {
+  font-family: "Baloo 2", cursive;
+  color: var(--purple);
+  font-size: 1.5rem;
+  margin-bottom: 6px;
+}
+
+.game-instruction {
+  font-size: 1rem;
+  color: var(--muted);
+  font-weight: 900;
+  margin-bottom: 12px;
+}
+
+.big-prompt {
+  background: #fff7ed;
+  border: 3px solid #fed7aa;
+  border-radius: 22px;
+  padding: 18px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+.prompt-emoji {
+  font-size: 4rem;
+  line-height: 1;
+}
+
+.prompt-word {
+  font-family: "Baloo 2", cursive;
+  font-size: 2.2rem;
+  color: var(--orange);
+  line-height: 1;
+  margin-top: 6px;
+}
+
+.choice-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 9px;
+}
+
+.choice-btn {
+  border: 3px solid var(--border);
+  background: white;
+  border-radius: 18px;
+  font-family: "Baloo 2", cursive;
+  font-size: 2rem;
+  color: var(--pink-dark);
+  font-weight: 900;
+  padding: 9px;
+  cursor: pointer;
+}
+
+.choice-btn.correct {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.choice-btn.wrong {
+  background: #fee2e2;
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.feedback {
+  min-height: 34px;
+  font-weight: 900;
+  margin-top: 10px;
+  color: var(--purple);
+  font-size: 1rem;
+}
+
+.word-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.word-pill {
+  border: 3px solid #bfdbfe;
+  background: #eff6ff;
+  color: var(--blue);
+  border-radius: 18px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  font-family: "Baloo 2", cursive;
+  font-size: 1.45rem;
+  font-weight: 900;
+}
+
+.coding-board {
+  background: #ffffff;
+  border: 3px solid #bbf7d0;
+  border-radius: 24px;
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.code-word {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 12px 0;
+  flex-wrap: wrap;
+}
+
+.code-tile {
+  width: 76px;
+  min-height: 76px;
+  border-radius: 20px;
+  background: #f0fdf4;
+  border: 3px solid #bbf7d0;
+  display: grid;
+  place-items: center;
+  font-family: "Baloo 2", cursive;
+  font-size: 2.6rem;
+  color: var(--green);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.sound-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0 14px;
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--green);
+}
+
+.tracing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+  gap: 12px;
+}
+
+.trace-card {
+  background: white;
+  border: 3px solid var(--yellow);
+  border-radius: 24px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.trace-letter {
+  font-family: "Baloo 2", cursive;
+  font-size: 5rem;
+  line-height: 0.9;
+  color: var(--orange);
+}
+
+.trace-line {
+  height: 3px;
+  border-bottom: 3px dashed #f59e0b;
+  margin: 12px 4px;
+}
+
+.trace-card button {
+  margin-top: 8px;
+}
+
+.star-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.star {
+  width: 43px;
+  height: 43px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 2px solid #e5e7eb;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+}
+
+.star.on {
+  background: var(--yellow-light);
+  border-color: var(--yellow);
+}
+
+.print-card {
+  background: white;
+  border: 3px solid var(--green-light);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+}
+
+.print-card h3 {
+  font-family: "Baloo 2", cursive;
+  color: var(--green);
+  font-size: 1.5rem;
+}
+
+.print-card p {
+  font-weight: 800;
+  color: var(--muted);
+  margin: 6px 0 12px;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(31,41,55,0.58);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+.modal-box {
+  width: min(96vw, 560px);
+  background: white;
+  border-radius: 28px;
+  padding: 22px;
+  border: 4px solid var(--pink);
+  box-shadow: 0 18px 50px rgba(31,41,55,0.25);
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 12px;
+}
+
+.modal-head h3 {
+  font-family: "Baloo 2", cursive;
+  color: var(--pink-dark);
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.close-btn {
+  border: none;
+  background: #fee2e2;
+  color: var(--red);
+  border-radius: 999px;
+  width: 38px;
+  height: 38px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.adult-note {
+  background: #fff7ed;
+  border: 2px solid #fed7aa;
+  border-radius: 18px;
+  padding: 12px;
+  margin: 10px 0;
+  color: #9a3412;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.adult-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+  padding-left: 20px;
+  color: var(--text);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.footer {
+  text-align: center;
+  padding: 26px 14px;
+  color: var(--muted);
+  font-weight: 900;
+}
+
+@media (max-width: 760px) {
+  .sound-grid,
+  .choice-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .welcome-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .avatar {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .sound-grid,
+  .choice-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .adult-btn {
+    position: static;
+    margin-bottom: 12px;
+  }
+}
+
+@media print {
+  .header,
+  .tts-bar,
+  .adult-btn,
+  .card-actions,
+  .small-btn,
+  .read-big,
+  .modal-overlay,
+  .footer {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+  }
+
+  .activity-card,
+  .game-box,
+  .coding-board,
+  .print-card,
+  .trace-card {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <button class="adult-btn" onclick="openAdult()">Adult Notes</button>
+  <h1>Charlotte's Sound Station</h1>
+  <p>SATPIN phonics, first sounds, and early word coding</p>
+</header>
+
+<div class="tts-bar">
+  <span>🔊 Read aloud speed:</span>
+  <button class="speed-btn" id="slowBtn" onclick="setSpeed(0.65, 'slowBtn')">Slow</button>
+  <button class="speed-btn active" id="normalBtn" onclick="setSpeed(0.85, 'normalBtn')">Normal</button>
+  <button class="speed-btn" id="fastBtn" onclick="setSpeed(1.05, 'fastBtn')">Fast</button>
+  <button class="stop-btn" onclick="stopSpeak()">Stop</button>
+</div>
+
+<main class="main">
+  <section class="welcome-card">
+    <div class="avatar">👧</div>
+    <div>
+      <h2>Hello Charlotte!</h2>
+      <p>Tap the speaker buttons. Listen, say the sound, then try the activity.</p>
+      <button class="read-big" onclick="speak('Hello Charlotte. Welcome to your sound station. Today you will listen, say the sound, tap the letters, and code little words.')">🔊 Read this to me</button>
+      <div class="star-row" aria-label="Progress stars">
+        <div class="star on">⭐</div>
+        <div class="star on">⭐</div>
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+        <div class="star">⭐</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">🔤</div>
+      <h2>Tap a Sound</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="sound-grid" id="soundGrid"></div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">🎲</div>
+      <h2>Listen and Tap</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="game-box">
+      <div class="game-title">What sound starts the word?</div>
+      <div class="game-instruction">Tap play. Listen. Then tap the first sound.</div>
+      <button class="read-big" onclick="newSoundGame()">▶️ New word</button>
+      <div class="big-prompt">
+        <div class="prompt-emoji" id="promptEmoji">☀️</div>
+        <div class="prompt-word" id="promptWord">sun</div>
+      </div>
+      <button class="small-btn alt" onclick="readCurrentPrompt()">🔊 Hear the word</button>
+      <div class="choice-row" id="choiceRow"></div>
+      <div class="feedback" id="feedback">Tap New word to start.</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">🧩</div>
+      <h2>Code a Word</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="coding-board">
+      <div class="game-title">Say it, tap it, code it</div>
+      <p class="game-instruction">Tap a word. Then tap each letter tile to hear the sounds.</p>
+      <div class="word-list" id="wordList"></div>
+      <div class="code-word" id="codeWord"></div>
+      <div class="sound-dots" id="soundDots"></div>
+      <button class="small-btn" onclick="readBuiltWord()">🔊 Read my word</button>
+      <button class="small-btn alt" onclick="nextCodeWord()">Next word</button>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">✏️</div>
+      <h2>Trace and Say</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="tracing-grid" id="traceGrid"></div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">🌈</div>
+      <h2>Activities for Charlotte</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="cards-grid">
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-pink">👂</div>
+          <div>
+            <span class="card-tag">Listening</span>
+            <div class="card-title">Sound Detective</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte listens for the first sound in a word.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Adult says one word: sun, ant, tap, pin, insect, or net.</span></li>
+            <li><span class="num">2</span><span>Charlotte repeats the word.</span></li>
+            <li><span class="num">3</span><span>Charlotte says the first sound only.</span></li>
+            <li><span class="num">4</span><span>Charlotte taps the matching letter card.</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-blue">👆</div>
+          <div>
+            <span class="card-tag">Letters</span>
+            <div class="card-title">Tap My Sound</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte taps a big letter and copies the sound.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Adult points to one SATPIN letter.</span></li>
+            <li><span class="num">2</span><span>Charlotte taps it on the screen.</span></li>
+            <li><span class="num">3</span><span>Charlotte says the sound three times.</span></li>
+            <li><span class="num">4</span><span>Charlotte finds one object with that sound.</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-green">🧱</div>
+          <div>
+            <span class="card-tag">Coding</span>
+            <div class="card-title">Push the Sounds</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte pushes counters for each sound in a word.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Pick a word: sat, pin, tap, nap, tin, or pan.</span></li>
+            <li><span class="num">2</span><span>Say the whole word.</span></li>
+            <li><span class="num">3</span><span>Push one counter for each sound.</span></li>
+            <li><span class="num">4</span><span>Say the sounds, then blend the word.</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-yellow">🖍️</div>
+          <div>
+            <span class="card-tag">Writing</span>
+            <div class="card-title">Rainbow Letters</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte traces one letter using different colours.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Choose one sound: s, a, t, p, i, or n.</span></li>
+            <li><span class="num">2</span><span>Say the sound while tracing the letter.</span></li>
+            <li><span class="num">3</span><span>Trace it with three colours.</span></li>
+            <li><span class="num">4</span><span>Draw one picture that starts with that sound.</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-orange">🏠</div>
+          <div>
+            <span class="card-tag">Home hunt</span>
+            <div class="card-title">Find the Sound</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte finds things around the room with a first sound.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Adult picks one sound.</span></li>
+            <li><span class="num">2</span><span>Charlotte looks around the room.</span></li>
+            <li><span class="num">3</span><span>Charlotte finds or points to an object.</span></li>
+            <li><span class="num">4</span><span>Adult says: yes, it starts with that sound.</span></li>
+          </ol>
+        </div>
+      </article>
+
+      <article class="activity-card">
+        <div class="card-top">
+          <div class="card-icon bg-purple">🎤</div>
+          <div>
+            <span class="card-tag">Blending</span>
+            <div class="card-title">Robot Talk</div>
+          </div>
+        </div>
+        <p class="card-desc">Charlotte listens to robot sounds and blends the word.</p>
+        <div class="card-actions">
+          <button class="small-btn" onclick="speakCard(this)">🔊 Read activity</button>
+          <button class="small-btn alt" onclick="markStar()">⭐ Done</button>
+        </div>
+        <div class="steps">
+          <h4>Steps</h4>
+          <ol>
+            <li><span class="num">1</span><span>Adult says sounds slowly, like s-a-t.</span></li>
+            <li><span class="num">2</span><span>Charlotte repeats the sounds.</span></li>
+            <li><span class="num">3</span><span>Charlotte blends the sounds into a word.</span></li>
+            <li><span class="num">4</span><span>Try pin, tin, tap, pan, sip, nap, and pit.</span></li>
+          </ol>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-header">
+      <div class="section-emoji">🖨️</div>
+      <h2>Print a Mini Task</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="print-card">
+      <h3>Charlotte's SATPIN practice sheet</h3>
+      <p>Print this page, or save it as a PDF. The screen activities and steps will print cleanly.</p>
+      <button class="read-big" onclick="window.print()">🖨️ Print</button>
+      <button class="read-big" onclick="speak('Print a practice sheet. Ask an adult to help you print this page.')">🔊 Read this</button>
+    </div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="adultModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h3>Adult Notes</h3>
+      <button class="close-btn" onclick="closeAdult()">X</button>
+    </div>
+    <div class="adult-note">
+      This site is made for a Year 1 student who is not yet reading. Keep each task short. Read-aloud buttons are built in, and every activity can be completed by listening, tapping, saying, tracing, and matching.
+    </div>
+    <ul class="adult-list">
+      <li>Focus sounds: s, a, t, p, i, n.</li>
+      <li>Use pure sounds where possible: say /s/ not "suh".</li>
+      <li>Start with listening and matching before asking Charlotte to read words.</li>
+      <li>For coding, use counters or fingers to show one sound per letter.</li>
+      <li>Suggested words: sat, pin, tap, tin, pan, nap, sip, pit, tip.</li>
+      <li>Stop after 10 to 15 minutes if Charlotte becomes tired.</li>
+      <li>Celebrate sound recognition, not spelling accuracy yet.</li>
+    </ul>
+    <button class="read-big" onclick="speak('Adult notes. Focus on the sounds s, a, t, p, i, and n. Keep practice short. Charlotte can listen, tap, say, trace, and match. Celebrate sound recognition.')">🔊 Read notes</button>
+  </div>
+</div>
+
+<footer class="footer">
+  Made for Charlotte. SATPIN first sounds and early word coding.
+</footer>
+
+<script>
+const sounds = [
+  {letter: "s", word: "sun", emoji: "☀️", phrase: "s. s. sun starts with s."},
+  {letter: "a", word: "ant", emoji: "🐜", phrase: "a. a. ant starts with a."},
+  {letter: "t", word: "tap", emoji: "👆", phrase: "t. t. tap starts with t."},
+  {letter: "p", word: "pin", emoji: "📍", phrase: "p. p. pin starts with p."},
+  {letter: "i", word: "insect", emoji: "🪲", phrase: "i. i. insect starts with i."},
+  {letter: "n", word: "net", emoji: "🥅", phrase: "n. n. net starts with n."}
+];
+
+const promptWords = [
+  {word: "sun", emoji: "☀️", answer: "s"},
+  {word: "sock", emoji: "🧦", answer: "s"},
+  {word: "snake", emoji: "🐍", answer: "s"},
+  {word: "ant", emoji: "🐜", answer: "a"},
+  {word: "apple", emoji: "🍎", answer: "a"},
+  {word: "tap", emoji: "👆", answer: "t"},
+  {word: "tent", emoji: "⛺", answer: "t"},
+  {word: "tiger", emoji: "🐯", answer: "t"},
+  {word: "pin", emoji: "📍", answer: "p"},
+  {word: "pig", emoji: "🐷", answer: "p"},
+  {word: "pan", emoji: "🍳", answer: "p"},
+  {word: "insect", emoji: "🪲", answer: "i"},
+  {word: "ink", emoji: "🖋️", answer: "i"},
+  {word: "net", emoji: "🥅", answer: "n"},
+  {word: "nose", emoji: "👃", answer: "n"},
+  {word: "nap", emoji: "😴", answer: "n"}
+];
+
+const codeWords = ["sat", "pin", "tap", "tin", "pan", "nap", "sip", "pit", "tip"];
+let speechRate = 0.85;
+let currentPrompt = promptWords[0];
+let currentCodeWord = "sat";
+let nextIndex = 0;
+
+function speak(text) {
+  stopSpeak();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = speechRate;
+  utterance.pitch = 1.08;
+  utterance.volume = 1;
+  window.speechSynthesis.speak(utterance);
+}
+
+function stopSpeak() {
+  window.speechSynthesis.cancel();
+}
+
+function setSpeed(rate, id) {
+  speechRate = rate;
+  document.querySelectorAll(".speed-btn").forEach(btn => btn.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+}
+
+function buildSoundGrid() {
+  const grid = document.getElementById("soundGrid");
+  grid.innerHTML = "";
+  sounds.forEach(item => {
+    const card = document.createElement("button");
+    card.className = "sound-card";
+    card.setAttribute("aria-label", "Hear sound " + item.letter);
+    card.innerHTML = `
+      <div class="sound-letter">${item.letter}</div>
+      <div class="sound-example">${item.emoji}</div>
+      <div class="sound-word">${item.word}</div>
+    `;
+    card.onclick = () => speak(item.phrase);
+    grid.appendChild(card);
+  });
+}
+
+function buildChoices() {
+  const row = document.getElementById("choiceRow");
+  row.innerHTML = "";
+  sounds.forEach(item => {
+    const btn = document.createElement("button");
+    btn.className = "choice-btn";
+    btn.textContent = item.letter;
+    btn.onclick = () => checkAnswer(item.letter, btn);
+    row.appendChild(btn);
+  });
+}
+
+function newSoundGame() {
+  currentPrompt = promptWords[Math.floor(Math.random() * promptWords.length)];
+  document.getElementById("promptEmoji").textContent = currentPrompt.emoji;
+  document.getElementById("promptWord").textContent = currentPrompt.word;
+  document.getElementById("feedback").textContent = "Listen, then tap the first sound.";
+  document.querySelectorAll(".choice-btn").forEach(btn => {
+    btn.classList.remove("correct", "wrong");
+  });
+  speak("What sound starts the word " + currentPrompt.word + "? " + currentPrompt.word + ".");
+}
+
+function readCurrentPrompt() {
+  speak(currentPrompt.word + ". The word is " + currentPrompt.word + ". What sound starts " + currentPrompt.word + "?");
+}
+
+function checkAnswer(letter, btn) {
+  document.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("correct", "wrong"));
+  if (letter === currentPrompt.answer) {
+    btn.classList.add("correct");
+    document.getElementById("feedback").textContent = "Yes. Great listening.";
+    speak("Yes. " + currentPrompt.word + " starts with " + letter + ".");
+    markStar();
+  } else {
+    btn.classList.add("wrong");
+    document.getElementById("feedback").textContent = "Try again. Listen to the first sound.";
+    speak("Try again. Listen to the first sound in " + currentPrompt.word + ".");
+  }
+}
+
+function buildWordList() {
+  const list = document.getElementById("wordList");
+  list.innerHTML = "";
+  codeWords.forEach(word => {
+    const pill = document.createElement("button");
+    pill.className = "word-pill";
+    pill.textContent = word;
+    pill.onclick = () => setCodeWord(word);
+    list.appendChild(pill);
+  });
+}
+
+function setCodeWord(word) {
+  currentCodeWord = word;
+  const container = document.getElementById("codeWord");
+  const dots = document.getElementById("soundDots");
+  container.innerHTML = "";
+  dots.innerHTML = "";
+  word.split("").forEach(letter => {
+    const tile = document.createElement("button");
+    tile.className = "code-tile";
+    tile.textContent = letter;
+    tile.onclick = () => speak(letter + ".");
+    container.appendChild(tile);
+
+    const dot = document.createElement("div");
+    dot.className = "dot";
+    dots.appendChild(dot);
+  });
+  speak(word + ". Listen. " + word.split("").join(". ") + ". " + word + ".");
+}
+
+function readBuiltWord() {
+  speak(currentCodeWord + ". The sounds are " + currentCodeWord.split("").join(". ") + ". Blend it. " + currentCodeWord + ".");
+}
+
+function nextCodeWord() {
+  nextIndex = (nextIndex + 1) % codeWords.length;
+  setCodeWord(codeWords[nextIndex]);
+}
+
+function buildTraceGrid() {
+  const grid = document.getElementById("traceGrid");
+  grid.innerHTML = "";
+  sounds.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "trace-card";
+    card.innerHTML = `
+      <div class="trace-letter">${item.letter}</div>
+      <div class="trace-line"></div>
+      <div class="trace-line"></div>
+      <button class="small-btn" onclick="speak('Trace ${item.letter}. Say ${item.letter}. ${item.word} starts with ${item.letter}.')">🔊 Trace ${item.letter}</button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function speakCard(button) {
+  const card = button.closest(".activity-card");
+  const title = card.querySelector(".card-title").textContent;
+  const desc = card.querySelector(".card-desc").textContent;
+  const steps = Array.from(card.querySelectorAll(".steps li span:last-child")).map((step, index) => "Step " + (index + 1) + ". " + step.textContent).join(" ");
+  speak(title + ". " + desc + " " + steps);
+}
+
+function markStar() {
+  const stars = Array.from(document.querySelectorAll(".star"));
+  const next = stars.find(star => !star.classList.contains("on"));
+  if (next) {
+    next.classList.add("on");
+    speak("Well done Charlotte. You earned a star.");
+  }
+}
+
+function openAdult() {
+  document.getElementById("adultModal").classList.add("open");
+}
+
+function closeAdult() {
+  document.getElementById("adultModal").classList.remove("open");
+}
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") closeAdult();
+});
+
+buildSoundGrid();
+buildChoices();
+buildWordList();
+buildTraceGrid();
+setCodeWord("sat");
+</script>
+</body>
+</html>
