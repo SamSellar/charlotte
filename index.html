@@ -342,12 +342,12 @@ button{font-family:inherit}
 
 <script>
 const sounds=[
-  {letter:"s",word:"sun",emoji:"☀️",say:"sss"},
-  {letter:"a",word:"ant",emoji:"🐜",say:"ah"},
-  {letter:"t",word:"tap",emoji:"👆",say:"tuh"},
-  {letter:"p",word:"pin",emoji:"📍",say:"puh"},
-  {letter:"i",word:"insect",emoji:"🪲",say:"ih"},
-  {letter:"n",word:"net",emoji:"🥅",say:"nnn"}
+  {letter:"s",word:"sun",emoji:"☀️",say:"s"},
+  {letter:"a",word:"ant",emoji:"🐜",say:"a"},
+  {letter:"t",word:"tap",emoji:"👆",say:"t"},
+  {letter:"p",word:"pin",emoji:"📍",say:"p"},
+  {letter:"i",word:"insect",emoji:"🪲",say:"i"},
+  {letter:"n",word:"net",emoji:"🥅",say:"n"}
 ];
 const promptWords=[
   {word:"sun",emoji:"☀️",answer:"s"},{word:"sock",emoji:"🧦",answer:"s"},{word:"snake",emoji:"🐍",answer:"s"},
@@ -373,10 +373,6 @@ function loadVoices(){
 if("speechSynthesis" in window){
   loadVoices();
   window.speechSynthesis.onvoiceschanged=loadVoices;
-}
-function getPhoneme(letter){
-  const match=sounds.find(item=>item.letter===letter);
-  return match ? match.say : letter;
 }
 function speak(text){
   if(!("speechSynthesis" in window)){
@@ -443,7 +439,7 @@ function checkAnswer(letter,btn){
   if(letter===currentPrompt.answer){
     btn.classList.add("correct");
     document.getElementById("feedback").textContent="Yes. Great listening.";
-    speak(getPhoneme(letter));
+    speak(letter);
     markStar(false);
   } else {
     btn.classList.add("wrong");
@@ -472,7 +468,7 @@ function setCodeWord(word){
     const tile=document.createElement("button");
     tile.className="code-tile";
     tile.textContent=letter;
-    tile.onclick=()=>speak(getPhoneme(letter));
+    tile.onclick=()=>speak(letter+".");
     container.appendChild(tile);
     const dot=document.createElement("div");
     dot.className="dot";
@@ -493,7 +489,7 @@ function buildTraceGrid(){
   sounds.forEach(item=>{
     const card=document.createElement("div");
     card.className="trace-card";
-    card.innerHTML=`<div class="trace-letter">${item.letter}</div><div class="trace-line"></div><div class="trace-line"></div><button class="small-btn" onclick="speak(getPhoneme('${item.letter}'))">🔊 Trace ${item.letter}</button>`;
+    card.innerHTML=`<div class="trace-letter">${item.letter}</div><div class="trace-line"></div><div class="trace-line"></div><button class="small-btn" onclick="speak('${item.letter}')">🔊 Trace ${item.letter}</button>`;
     grid.appendChild(card);
   });
 }
