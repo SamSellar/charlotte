@@ -342,12 +342,12 @@ button{font-family:inherit}
 
 <script>
 const sounds=[
-  {letter:"s",word:"sun",emoji:"☀️",say:"sss. sss. sun starts with sss."},
-  {letter:"a",word:"ant",emoji:"🐜",say:"a. a. ant starts with a."},
-  {letter:"t",word:"tap",emoji:"👆",say:"t. t. tap starts with t."},
-  {letter:"p",word:"pin",emoji:"📍",say:"p. p. pin starts with p."},
-  {letter:"i",word:"insect",emoji:"🪲",say:"i. i. insect starts with i."},
-  {letter:"n",word:"net",emoji:"🥅",say:"n. n. net starts with n."}
+  {letter:"s",word:"sun",emoji:"☀️",say:"s"},
+  {letter:"a",word:"ant",emoji:"🐜",say:"a"},
+  {letter:"t",word:"tap",emoji:"👆",say:"t"},
+  {letter:"p",word:"pin",emoji:"📍",say:"p"},
+  {letter:"i",word:"insect",emoji:"🪲",say:"i"},
+  {letter:"n",word:"net",emoji:"🥅",say:"n"}
 ];
 const promptWords=[
   {word:"sun",emoji:"☀️",answer:"s"},{word:"sock",emoji:"🧦",answer:"s"},{word:"snake",emoji:"🐍",answer:"s"},
@@ -429,22 +429,22 @@ function newSoundGame(){
   document.getElementById("promptWord").textContent=currentPrompt.word;
   document.getElementById("feedback").textContent="Listen, then tap the first sound.";
   document.querySelectorAll(".choice-btn").forEach(btn=>btn.classList.remove("correct","wrong"));
-  speak("What sound starts the word "+currentPrompt.word+"? "+currentPrompt.word+".");
+  speak(currentPrompt.word);
 }
 function readCurrentPrompt(){
-  speak(currentPrompt.word+". The word is "+currentPrompt.word+". What sound starts "+currentPrompt.word+"?");
+  speak(currentPrompt.word);
 }
 function checkAnswer(letter,btn){
   document.querySelectorAll(".choice-btn").forEach(b=>b.classList.remove("correct","wrong"));
   if(letter===currentPrompt.answer){
     btn.classList.add("correct");
     document.getElementById("feedback").textContent="Yes. Great listening.";
-    speak("Yes. "+currentPrompt.word+" starts with "+letter+".");
+    speak(letter);
     markStar(false);
   } else {
     btn.classList.add("wrong");
     document.getElementById("feedback").textContent="Try again. Listen to the first sound.";
-    speak("Try again. Listen to the first sound in "+currentPrompt.word+".");
+    speak("Try again.");
   }
 }
 function buildWordList(){
@@ -474,10 +474,10 @@ function setCodeWord(word){
     dot.className="dot";
     dots.appendChild(dot);
   });
-  speak(word+". Listen. "+word.split("").join(". ")+". "+word+".");
+  speak(word);
 }
 function readBuiltWord(){
-  speak(currentCodeWord+". The sounds are "+currentCodeWord.split("").join(". ")+". Blend it. "+currentCodeWord+".");
+  speak(currentCodeWord);
 }
 function nextCodeWord(){
   nextIndex=(nextIndex+1)%codeWords.length;
@@ -489,7 +489,7 @@ function buildTraceGrid(){
   sounds.forEach(item=>{
     const card=document.createElement("div");
     card.className="trace-card";
-    card.innerHTML=`<div class="trace-letter">${item.letter}</div><div class="trace-line"></div><div class="trace-line"></div><button class="small-btn" onclick="speak('Trace ${item.letter}. Say ${item.letter}. ${item.word} starts with ${item.letter}.')">🔊 Trace ${item.letter}</button>`;
+    card.innerHTML=`<div class="trace-letter">${item.letter}</div><div class="trace-line"></div><div class="trace-line"></div><button class="small-btn" onclick="speak('${item.letter}')">🔊 Trace ${item.letter}</button>`;
     grid.appendChild(card);
   });
 }
